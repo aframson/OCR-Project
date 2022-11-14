@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import App from './App';
-import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import Drugs from './Drugs';
+// import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<Drugs />, document.getElementById('root'));

@@ -1,80 +1,107 @@
-import React from 'react';
-import Tesseract from 'tesseract.js';
-
+import React from 'react'
+import ima from './assets/dr.gif'
+import ucc from './assets/ucc.png'
 import './style.css';
+import a1 from './assets/1.png'
+import a2 from './assets/2.png'
+import a3 from './assets/3.png'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import Drugs from './Drugs';
 
-const App = () => {
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [image, setImage] = React.useState('');
-  const [text, setText] = React.useState('');
-  const [progress, setProgress] = React.useState(0);
-
-  const handleSubmit = () => {
-    setIsLoading(true);
-    Tesseract.recognize(image, 'eng', {
-      logger: (m) => {
-        console.log(m);
-        if (m.status === 'recognizing text') {
-          setProgress(parseInt(m.progress * 100));
-        }
-      },
-    })
-      .catch((err) => {
-        console.error(err);
-      })
-      .then((result) => {
-        console.log(result.data);
-        setText(result.data.text);
-        setIsLoading(false);
-      });
-  };
-
+function App() {
   return (
-    <div className="container" style={{ height: '100vh' }}>
-      <div className="row h-100">
-        <div className="col-md-5 mx-auto h-100 d-flex flex-column justify-content-center">
-          {!isLoading && (
-            <h1 className="text-center py-5 mc-5">Image To Text</h1>
-          )}
-          {isLoading && (
-            <>
-              <progress className="form-control" value={progress} max="100">
-                {progress}%{' '}
-              </progress>{' '}
-              <p className="text-center py-0 my-0">Converting:- {progress} %</p>
-            </>
-          )}
-          {!isLoading && !text && (
-            <>
-              <input
-                type="file"
-                onChange={(e) =>
-                  setImage(URL.createObjectURL(e.target.files[0]))
-                }
-                className="form-control mt-5 mb-2"
-              />
-              <input
-                type="button"
-                onClick={handleSubmit}
-                className="btn btn-primary mt-5"
-                value="Convert"
-              />
-            </>
-          )}
-          {!isLoading && text && (
-            <>
-              <textarea
-                className="form-control w-100 mt-5"
-                rows="30"
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-              ></textarea>
-            </>
-          )}
+    <Router>
+     
+      <div className='container'>
+        <div className='navigation'>
+          <ul>
+            <li>
+              <a className='title2' href="Home">AppName</a>
+              <Link to="/">Home</Link>
+              <Link to="/start">Get Started</Link>
+            </li>
+          </ul>
+        </div>
+        <div className='grid-box'>
+          <div className='pan'>
+            <div className='title'>Get Drugs Instantly from Reciepts</div>
+            <p className='sub'>
+              Hey just upload the reciept your doctors gives to you on this platform and it will recommend a
+              Drug for you instantly
+            </p>
+            <Link to="/start">
+              <button className='start'>Get Started</button>
+            </Link>
+          </div>
+          <div className='pan'>
+            <img className='image' src={ima} alt="logo" />
+          </div>
+        </div>
+        <div className='process'>
+          The Process
+        </div>
+        <div className='grid'>
+          <div className='pp'>
+            <center>
+              <img src={a1} className="imf" />
+            </center>
+            <p className='txt'>
+              1. First upload reciept onto the platform and wait for OCR process
+            </p>
+          </div>
+          <div className='pp'>
+            <center>
+              <img src={a2} className="imf" />
+            </center>
+            <p className='txt'>
+              2. Converted text is passed through our datasets and matched to an available drug
+            </p>
+          </div>
+          <div className='pp'>
+            <center>
+              <img src={a3} className="imf" />
+            </center>
+            <p className='txt'>
+              3. drug is presented for you to buy or get it delivered at your door step
+            </p>
+          </div>
+        </div>
+        <div className="footer">
+          <div className="sec">
+            <div class="devs">
+              <div className="sec-title">Developers</div>
+              <div className="name">Trueman</div>
+              <div className="name">Atta Mills</div>
+              <div className="name">Nana Akufo Ado</div>
+            </div>
+          </div>
+          <div class="sec">
+            <div className="sec-title">Acknowledgment</div>
+            <p class="ark">
+              This is a project of the University of Cape Coast ,
+              <br />built under the supervision of <span class="active">Mr. Vice President</span>
+            </p>
+          </div>
+
+
+          <div class="sec">
+            <img className="ucc" src={ucc} alt="" srcset="" />
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
+      {/* <Switch>
+        <Route path="/start">
+          <Drugs />
+        </Route>
+      </Switch> */}
+    </Router>
 
-export default App;
+  )
+}
+
+export default App
